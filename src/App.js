@@ -1,8 +1,12 @@
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import NotFoundPage from "./components/Common/NotFoundPage";
+import Main from "./components/Main/Main";
+import Log from "./components/Log/Log";
+import Nav from "./components/Common/Nav";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,23 +23,32 @@ const analytics = getAnalytics(app);
 
 function App() {
   useEffect(() => {
-    console.log(app.name)
+    console.log(app.name);
   }, []);
 
   return (
-    <Router>
-      <div className="grid h-screen place-items-center">
-        <div className="card w-96 bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">모각&lt;T&gt;</h2>
-            <p>10월 18일</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">신청하기</button>
-            </div>
-          </div>
-        </div>
+    // <BrowserRouter>
+    //
+    //
+    //     <Switch>
+    //       <Redirect from="/" to="/main" />
+    //       <Route path="/main" component={Main} />
+    //       <Route path="*" component={NotFoundPage} />
+    //     </Switch>
+    //
+    // </BrowserRouter>
+
+    <BrowserRouter>
+      <Nav />
+      <div className="contents">
+        <Routes>
+          <Route path="/" element={<Navigate replace to="main" />} />
+          <Route path="main/*" element={<Main />} />
+          <Route path="log/*" element={<Log />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
