@@ -4,9 +4,10 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import React, { useEffect } from "react";
 import NotFoundPage from "./components/Common/NotFoundPage";
-import Main from "./components/Main/Main";
+import Reservation from "./components/Reservation/Reservation";
 import Log from "./components/Log/Log";
 import Nav from "./components/Common/Nav";
+import Introduce from "./components/Introduce/Introduce";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -32,7 +33,7 @@ function App() {
     //
     //     <Switch>
     //       <Redirect from="/" to="/main" />
-    //       <Route path="/main" component={Main} />
+    //       <Route path="/main" component={Reservation} />
     //       <Route path="*" component={NotFoundPage} />
     //     </Switch>
     //
@@ -42,8 +43,9 @@ function App() {
       <Nav />
       <div className="contents">
         <Routes>
-          <Route path="/" element={<Navigate replace to="main" />} />
-          <Route path="main/*" element={<Main />} />
+          <Route path="/" element={<Navigate replace to="log" />} />
+          <Route path="introduce/*" element={<Introduce />} />
+          <Route path="reservation/*" element={<Reservation />} />
           <Route path="log/*" element={<Log />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
