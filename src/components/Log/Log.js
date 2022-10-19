@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { Octokit } from "octokit";
 
 function Log() {
-  return (
-    <div className="grid h-screen place-items-center">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">로그</h2>
-          <p>10월 18일</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">신청하기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const [contents, setContents] = useState([]);
+
+  const octokit = new Octokit({
+    auth: process.env.REACT_APP_OCTOKIT_TOKEN,
+  });
+
+  useEffect(() => {
+    fetchContent();
+  }, []);
+
+  useEffect(() => {
+    console.log(contents);
+  }, [contents]);
+
+  async function fetchContent() {
+    try {
+      const response = await octokit.request(
+        "GET /repos/{owner}/{repo}/contents/{path}",
+        {
+          owner: "ionoffx00101",
+          repo: "cloudflare_page",
+          path: "log",
+        }
+      );
+      setContents(response.data);
+    } catch (e) {}
+  }
+
+  const listItems = contents.map((item) => <div>{item.name}</div>);
+
+  return <div className="grid h-screen place-items-center">{listItems}</div>;
 }
 
 export default Log;
