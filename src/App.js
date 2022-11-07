@@ -28,17 +28,6 @@ function App() {
   }, []);
 
   return (
-    // <BrowserRouter>
-    //
-    //
-    //     <Switch>
-    //       <Redirect from="/" to="/main" />
-    //       <Route path="/main" component={Reservation} />
-    //       <Route path="*" component={NotFoundPage} />
-    //     </Switch>
-    //
-    // </BrowserRouter>
-
     <BrowserRouter>
       <Nav />
       <div className="contents">

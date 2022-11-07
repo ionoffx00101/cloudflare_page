@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Octokit } from "octokit";
+import { Link } from "react-router-dom";
 
 function Log() {
   const [contents, setContents] = useState([]);
@@ -31,7 +32,9 @@ function Log() {
     } catch (e) {}
   }
 
-  const listItems = contents.map((item) => <div>{item.name}</div>);
+  const listItems = contents.map((item) => (
+    <Link to="/log${item.path}">{item.name}</Link>
+  ));
 
   return <div className="grid h-screen place-items-center">{listItems}</div>;
 }
